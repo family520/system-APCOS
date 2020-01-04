@@ -33,7 +33,7 @@
                     <img src="img/icon001.png" alt="">
                     <span>数据中心总量/<span style="font-size: 0.08rem">TOTAL DATA CENTER</span></span>
                 </p>
-                <div id="EchartsBox" class="EchartsBox" style="height: 120px;width: 100%;"></div>
+                <div id="EchartsOne" class="EchartsBox" style="height: 1.2rem;width: 4.2rem;margin: 0.1rem 0;"></div>
                 <div class="textBox">
                     <div class="testItemBox">
                         <span><i style="background-color: #6EFFB5"></i>资源占有率: 25%</span>
@@ -56,7 +56,7 @@
                     <span>带宽统计/<span style="font-size: 0.08rem">DATA CENTER STATUS STATISTICS</span></span>
                 </p>
                 <p class="dwP">单位T</p>
-                <div id="EchartsTwo" style="width: 100%;height: 150px;"></div>
+                <div id="EchartsTwo" style="width: 4.2rem;height: 1.80rem;margin: 0.1rem 0;"></div>
             </div>
             <div class="itemBox">
                 <span class="iconBox"></span>
@@ -65,7 +65,7 @@
                     <span>故障挂机率/<span style="font-size: 0.08rem">FAULT HANG RATE</span></span>
                 </p>
                 <div class="threeBox">
-                    <div id="EchartsThree" style="width: 220px;height: 220px;"></div>
+                    <div id="EchartsThree" style="width: 2.2rem;height: 2.2rem;margin: 0.1rem 0;"></div>
                     <div class="threeTest">
                         <div class="testItem">
                             <i style="background-color: #FD9D02"></i>
@@ -106,7 +106,95 @@
         <div class="centerBox">
             <div id="two" style="width: 600px;height: 600px"></div>
         </div>
-        <div class="rightBox">rightBox</div>
+        <div class="rightBox">
+            <div class="itemBox" style="height: 98%">
+                <span class="iconBox"></span>
+                <p class="titleBox">
+                    <img src="img/icon001.png" alt="">
+                    <span>数据中心详情/<span style="font-size: 0.08rem">DATA CENTER DETAILS</span></span>
+                </p>
+                <div class="contBox">
+                    <p class="titleNav">承载能力</p>
+                    <div class="czBox">
+                        <div class="czItem">
+                            <img src="img/icon-01.png" alt="">
+                            <p>服务器数量</p>
+                            <span>20万台</span>
+                        </div>
+                        <div class="czItem">
+                            <img src="img/icon-02.png" alt="">
+                            <p>交换机</p>
+                            <span>1万台</span>
+                        </div>
+                        <div class="czItem">
+                            <img src="img/icon-03.png" alt="">
+                            <p>存储器</p>
+                            <span>7万台</span>
+                        </div>
+                        <div class="czItem">
+                            <img src="img/icon-04.png" alt="">
+                            <p>资源占有率</p>
+                            <span>70%</span>
+                        </div>
+                        <div class="czItem">
+                            <img src="img/icon-05.png" alt="">
+                            <p>宽带</p>
+                            <span>21T</span>
+                        </div>
+                    </div>
+                    <p class="titleNav">设备运行状况</p>
+                    <div class="sbBox">
+                        <div class="sbItem">
+                            <i></i>
+                            <span>运行设备:<span>10 万台</span></span>
+                        </div>
+                        <div class="sbItem">
+                            <i></i>
+                            <span>待机设备:<span>1 万台</span></span>
+                        </div>
+                        <div class="sbItem">
+                            <i></i>
+                            <span>故障设备:<span>0 台 </span></span>
+                        </div>
+                    </div>
+                    <p class="titleNav">用户使用软件人数统计</p>
+                    <div class="sbBox">
+                        <div class="sbItem">
+                            <i></i>
+                            <span> 巡检人员:<span>金一二</span></span>
+                        </div>
+                        <div class="sbItem">
+                            <i></i>
+                            <span>巡检备注:<span>一切正常</span></span>
+                        </div>
+                        <div class="sbItem" style="width: 100%">
+                            <i></i>
+                            <span>今期巡检时间:<span>2018.6.18</span></span>
+                        </div>
+                    </div>
+                    <p class="titleNav">管理人员</p>
+                    <div class="infoBox">
+                        <div class="imgBox">
+                            <img src="img/userImg.png" alt="">
+                        </div>
+                        <div>
+                            <p>
+                                <img src="img/userIcon.png" alt="">
+                                <span></span>
+                            </p>
+                            <p>
+                                <img src="img/telIcon.png" alt="">
+                                <span></span>
+                            </p>
+                            <p>
+                                <img src="img/homeIcon.png" alt="">
+                                <span></span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 <script src="js/echars_4.4.0.min.js"></script>
@@ -150,7 +238,7 @@
 <!-- 左边Echarts---js -->
 <script>
     $(function () {
-        EchartsOne("EchartsBox");
+        EchartsOne("EchartsOne");
         function EchartsOne(name) {
             // 基于准备好的dom，初始化echarts实例
             let myChart = echarts.init(document.getElementById(name));
@@ -173,7 +261,7 @@
                     name: '第一个圆环',
                     type: 'pie',
                     clockWise: false,
-                    radius: [40, 55],
+                    radius: [30, 45],
                     itemStyle: dataStyle,
                     hoverAnimation: false,
                     center: ['15%', '50%'],
@@ -200,7 +288,7 @@
                                 position: 'center',
                                 show: true,
                                 textStyle: {
-                                    fontSize: '14',
+                                    fontSize: '10',
                                     fontWeight: 'normal',
                                     color: '#fff'
                                 }
@@ -229,7 +317,7 @@
                     name: '第二个圆环',
                     type: 'pie',
                     clockWise: false,
-                    radius: [40, 55],
+                    radius: [30, 45],
                     itemStyle: dataStyle,
                     hoverAnimation: false,
                     center: ['50%', '50%'],
@@ -256,7 +344,7 @@
                                 position: 'center',
                                 show: true,
                                 textStyle: {
-                                    fontSize: '14',
+                                    fontSize: '10',
                                     fontWeight: 'normal',
                                     color: '#fff'
                                 }
@@ -285,7 +373,7 @@
                     name: '第三个圆环',
                     type: 'pie',
                     clockWise: false,
-                    radius: [40, 55],
+                    radius: [30, 45],
                     itemStyle: dataStyle,
                     hoverAnimation: false,
                     center: ['85%', '50%'],
@@ -312,7 +400,7 @@
                                 position: 'center',
                                 show: true,
                                 textStyle: {
-                                    fontSize: '14',
+                                    fontSize: '10',
                                     fontWeight: 'normal',
                                     color: '#fff'
                                 }
@@ -342,6 +430,10 @@
 
             // 使用刚指定的配置项和数据显示图表。
             myChart.setOption(option);
+            //根据窗口的大小变动图表 --- 重点
+            window.onresize = function(){
+                myChart.resize();
+            }
         }
 
         EchartsTwo("EchartsTwo");
@@ -455,6 +547,10 @@
             };
             // 使用刚指定的配置项和数据显示图表。
             myChartTwo.setOption(option);
+            //根据窗口的大小变动图表 --- 重点
+            window.onresize = function(){
+                myChartTwo.resize();
+            }
         }
         EchartsThree("EchartsThree");
         function EchartsThree(name) {
@@ -470,7 +566,7 @@
                         label: {
                             normal: {
                                 show: false,
-                                position: 'center'
+                                position: 'center',
                             },
                             emphasis: {
                                 show: true,
@@ -495,6 +591,10 @@
                 ]
             };
             myChartThree.setOption(option);
+            //根据窗口的大小变动图表 --- 重点
+            window.onresize = function(){
+                myChartThree.resize();
+            }
         }
     });
 
