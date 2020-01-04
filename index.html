@@ -6,8 +6,499 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>APCOS自检运营系统</title>
+    <link rel="stylesheet" href="css/index.css">
+    <script src="js/jquery.min.js"></script>
+    <script src="js/vue.min.js"></script>
 </head>
 <body>
+<div id="app">
+    <div class="header">
+        <span class="title">APCOS服务自检运营系统</span>
+        <div class="settingBox">
+            <div class="inputBox" v-show="isShow">
+                <i></i>
+                <input type="text" placeholder="搜索...">
+            </div>
+            <img class="searchImg" @click="isSearch()" :src="searchImgSrc" alt="">
+            <img class="DImg" src="img/2-3D.png" alt="">
+            <img class="fullScreenImg" @click="fullScreenImg()" src="img/FullScreen.png" alt="">
+            <img class="isShowImg" src="img/isShow.png" alt="">
+        </div>
+    </div>
+    <div class="contentBox">
+        <div class="leftBox">
+            <div class="itemBox">
+                <span class="iconBox"></span>
+                <p class="titleBox">
+                    <img src="img/icon001.png" alt="">
+                    <span>数据中心总量/<span style="font-size: 0.08rem">TOTAL DATA CENTER</span></span>
+                </p>
+                <div id="EchartsBox" class="EchartsBox" style="height: 120px;width: 100%;"></div>
+                <div class="textBox">
+                    <div class="testItemBox">
+                        <span><i style="background-color: #6EFFB5"></i>资源占有率: 25%</span>
+                        <span><i style="background-color: #6EFFB5"></i>运行状态</span>
+                    </div>
+                    <div class="testItemBox">
+                        <span><i style="background-color: #00FFFF"></i>资源占有率: 50%</span>
+                        <span><i style="background-color: #00FFFF"></i>运行状态</span>
+                    </div>
+                    <div class="testItemBox">
+                        <span><i style="background-color: #FD9D02"></i>资源占有率: 75%</span>
+                        <span><i style="background-color: #FD9D02"></i>运行状态</span>
+                    </div>
+                </div>
+            </div>
+            <div class="itemBox">
+                <span class="iconBox"></span>
+                <p class="titleBox">
+                    <img src="img/icon001.png" alt="">
+                    <span>带宽统计/<span style="font-size: 0.08rem">DATA CENTER STATUS STATISTICS</span></span>
+                </p>
+                <p class="dwP">单位T</p>
+                <div id="EchartsTwo" style="width: 100%;height: 150px;"></div>
+            </div>
+            <div class="itemBox">
+                <span class="iconBox"></span>
+                <p class="titleBox">
+                    <img src="img/icon001.png" alt="">
+                    <span>故障挂机率/<span style="font-size: 0.08rem">FAULT HANG RATE</span></span>
+                </p>
+                <div class="threeBox">
+                    <div id="EchartsThree" style="width: 220px;height: 220px;"></div>
+                    <div class="threeTest">
+                        <div class="testItem">
+                            <i style="background-color: #FD9D02"></i>
+                            <span>
+                                <span style="color: #FD9D02;font-size: 0.16rem">40%</span>
+                                <br>
+                                <span>1号服务器</span>
+                            </span>
+                        </div>
+                        <div class="testItem">
+                            <i style="background-color: #4AfeA3"></i>
+                            <span>
+                                <span style="color: #4AfeA3;font-size: 0.16rem">31%</span>
+                                <br>
+                                <span>2号服务器</span>
+                            </span>
+                        </div>
+                        <div class="testItem">
+                            <i style="background-color: #2A86F5"></i>
+                            <span>
+                                <span style="color: #2A86F5;font-size: 0.16rem">20%</span>
+                                <br>
+                                <span>3号服务器</span>
+                            </span>
+                        </div>
+                        <div class="testItem">
+                            <i style="background-color: #00FFFF"></i>
+                            <span>
+                                <span style="color: #00FFFF;font-size: 0.16rem">9%</span>
+                                <br>
+                                <span>4号服务器</span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="centerBox">
+            <div id="two" style="width: 600px;height: 600px"></div>
+        </div>
+        <div class="rightBox">rightBox</div>
+    </div>
+</div>
+<script src="js/echars_4.4.0.min.js"></script>
+<script src="js/echarts-liquidfill.min.js"></script>
+<script>
+    let vm = new Vue({
+        el:"#app",
+        data(){
+            return{
+                isShow:true,
+                searchImgSrc:"img/search.png"
+            }
+        },
+        methods:{
+            //是否显示搜索框
+            isSearch(){
+                this.isShow = !this.isShow;
+            },
+            //全屏显示
+            fullScreenImg(){
+                if(document.documentElement.RequestFullScreen){
+                    document.documentElement.RequestFullScreen();
+                }
+                //兼容火狐
+                console.log(document.documentElement.mozRequestFullScreen);
+                if(document.documentElement.mozRequestFullScreen){
+                    document.documentElement.mozRequestFullScreen();
+                }
+                //兼容谷歌等可以webkitRequestFullScreen也可以webkitRequestFullscreen
+                if(document.documentElement.webkitRequestFullScreen){
+                    document.documentElement.webkitRequestFullScreen();
+                }
+                //兼容IE,只能写msRequestFullscreen
+                if(document.documentElement.msRequestFullscreen){
+                    document.documentElement.msRequestFullscreen();
+                }
+            }
+        }
+    });
+</script>
+<!-- 左边Echarts---js -->
+<script>
+    $(function () {
+        EchartsOne("EchartsBox");
+        function EchartsOne(name) {
+            // 基于准备好的dom，初始化echarts实例
+            let myChart = echarts.init(document.getElementById(name));
 
+            let dataStyle = {
+                normal: {
+                    label: {
+                        show: false
+                    },
+                    labelLine: {
+                        show: false
+                    },
+                    shadowBlur: 0,
+                    shadowColor: '#203665'
+                }
+            };
+            option = {
+                // backgroundColor: "#20263f",
+                series: [{
+                    name: '第一个圆环',
+                    type: 'pie',
+                    clockWise: false,
+                    radius: [40, 55],
+                    itemStyle: dataStyle,
+                    hoverAnimation: false,
+                    center: ['15%', '50%'],
+                    data: [{
+                        value: 25,
+                        label: {
+                            normal: {
+                                rich: {
+                                    a: {
+                                        color: '#3a7ad5',
+                                        align: 'center',
+                                        fontSize: 20,
+                                        fontWeight: "bold"
+                                    },
+                                    b: {
+                                        color: '#fff',
+                                        align: 'center',
+                                        fontSize: 16
+                                    }
+                                },
+                                formatter: function(params){
+                                    return "北京数据\n\n"+"中心";
+                                },
+                                position: 'center',
+                                show: true,
+                                textStyle: {
+                                    fontSize: '14',
+                                    fontWeight: 'normal',
+                                    color: '#fff'
+                                }
+                            }
+                        },
+                        itemStyle: {
+                            normal: {
+                                color: '#6EFFB5',
+                                shadowColor: '#6EFFB5',
+                                shadowBlur: 0
+                            }
+                        }
+                    }, {
+                        value: 75,
+                        name: 'invisible',
+                        itemStyle: {
+                            normal: {
+                                color: '#333347'
+                            },
+                            emphasis: {
+                                color: '#333347'
+                            }
+                        }
+                    }]
+                }, {
+                    name: '第二个圆环',
+                    type: 'pie',
+                    clockWise: false,
+                    radius: [40, 55],
+                    itemStyle: dataStyle,
+                    hoverAnimation: false,
+                    center: ['50%', '50%'],
+                    data: [{
+                        value: 50,
+                        label: {
+                            normal: {
+                                rich: {
+                                    a: {
+                                        color: '#d03e93',
+                                        align: 'center',
+                                        fontSize: 20,
+                                        fontWeight: "bold"
+                                    },
+                                    b: {
+                                        color: '#fff',
+                                        align: 'center',
+                                        fontSize: 16
+                                    }
+                                },
+                                formatter: function(params){
+                                    return "重庆数据\n\n"+"中心";
+                                },
+                                position: 'center',
+                                show: true,
+                                textStyle: {
+                                    fontSize: '14',
+                                    fontWeight: 'normal',
+                                    color: '#fff'
+                                }
+                            }
+                        },
+                        itemStyle: {
+                            normal: {
+                                color: '#00FFFF',
+                                shadowColor: '#00FFFF',
+                                shadowBlur: 0
+                            }
+                        }
+                    }, {
+                        value: 50,
+                        name: 'invisible',
+                        itemStyle: {
+                            normal: {
+                                color: '#333347'
+                            },
+                            emphasis: {
+                                color: '#333347'
+                            }
+                        }
+                    }]
+                }, {
+                    name: '第三个圆环',
+                    type: 'pie',
+                    clockWise: false,
+                    radius: [40, 55],
+                    itemStyle: dataStyle,
+                    hoverAnimation: false,
+                    center: ['85%', '50%'],
+                    data: [{
+                        value: 75,
+                        label: {
+                            normal: {
+                                rich: {
+                                    a: {
+                                        color: '#603dd0',
+                                        align: 'center',
+                                        fontSize: 20,
+                                        fontWeight: "bold"
+                                    },
+                                    b: {
+                                        color: '#fff',
+                                        align: 'center',
+                                        fontSize: 16
+                                    }
+                                },
+                                formatter: function(params){
+                                    return "深圳数据\n\n"+"中心";
+                                },
+                                position: 'center',
+                                show: true,
+                                textStyle: {
+                                    fontSize: '14',
+                                    fontWeight: 'normal',
+                                    color: '#fff'
+                                }
+                            }
+                        },
+                        itemStyle: {
+                            normal: {
+                                color: '#FD9D02',
+                                shadowColor: '#FD9D02',
+                                shadowBlur: 0
+                            }
+                        }
+                    }, {
+                        value: 25,
+                        name: 'invisible',
+                        itemStyle: {
+                            normal: {
+                                color: '#333347'
+                            },
+                            emphasis: {
+                                color: '#333347'
+                            }
+                        }
+                    }]
+                }]
+            };
+
+            // 使用刚指定的配置项和数据显示图表。
+            myChart.setOption(option);
+        }
+
+        EchartsTwo("EchartsTwo");
+        function EchartsTwo(name) {
+            let myChartTwo = echarts.init(document.getElementById(name));
+
+            option = {
+                grid: {
+                    top: '20%',
+                    left: '10%',
+                    right: '10%',
+                    bottom: '15%',
+                    containLabel: true,
+                },
+                xAxis: {
+                    type: 'category',
+                    boundaryGap: false,
+                    data: ['', '04:00', '08:00', '12:00', '16:00', '20:00', ''],
+                    axisLine: {
+                        show: false,
+                        color: '#ffffff63'
+                    },
+                    axisTick: {
+                        show: true,
+                        length: 25,
+                        lineStyle: {
+                            color: "#ffffff1f"
+                        }
+                    },
+                    splitLine: {
+                        show: true,
+                        lineStyle: {
+                            color: '#ffffff1f'
+                        }
+                    },
+                    axisLabel: {
+                        // margin: 20,
+                        color: '#ffffff63'
+                    },
+                },
+                yAxis: [{
+                    type: 'value',
+                    position: 'left',
+                    axisLabel: {
+                        // margin: 20,
+                        color: '#ffffff63'
+                    },
+
+                    axisTick: {
+                        show: true,
+                        length: 15,
+                        lineStyle: {
+                            color: "#ffffff1f",
+                        }
+                    },
+                    splitLine: {
+                        // show: true,
+                        lineStyle: {
+                            color: '#ffffff1f'
+                        }
+                    },
+                    axisLine: {
+                        lineStyle: {
+                            color: '#fff',
+                            width: 2
+                        }
+                    }
+                }],
+                series: [{
+                    name: '注册总量',
+                    type: 'line',
+                    smooth: true, //是否平滑曲线显示
+                    showAllSymbol: true,
+                    symbol: 'circle',
+                    symbolSize: 6,
+                    lineStyle: {
+                        normal: {
+                            color: "#fff", // 线条颜色
+                        },
+                    },
+                    label: {
+                        show: true,
+                        position: 'top',
+                        textStyle: {
+                            color: '#fff',
+                        }
+                    },
+                    itemStyle: {
+                        color: "red",
+                        borderColor: "#fff",
+                        borderWidth: 3
+                    },
+                    tooltip: {
+                        show: false
+                    },
+                    areaStyle: {
+                        normal: {
+                            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                                offset: 0,
+                                color: '#00ffff'
+                            },
+                                {
+                                    offset: 1,
+                                    color: '#06061E'
+                                }
+                            ], false),
+                        }
+                    },
+                    data: [5, 15, 30, 25, 15, 10, 15,]
+                }]
+            };
+            // 使用刚指定的配置项和数据显示图表。
+            myChartTwo.setOption(option);
+        }
+        EchartsThree("EchartsThree");
+        function EchartsThree(name) {
+            let myChartThree = echarts.init(document.getElementById(name));
+            option = {
+                series: [
+                    {
+                        name: '访问来源',
+                        type: 'pie',
+                        radius: ['50%', '70%'],
+                        avoidLabelOverlap: true,
+                        color:['#FD9D02','#4AfeA3','#2A86F5','#00FFFF'],
+                        label: {
+                            normal: {
+                                show: false,
+                                position: 'center'
+                            },
+                            emphasis: {
+                                show: true,
+                                textStyle: {
+                                    fontSize: '14',
+                                    fontWeight: 'bold'
+                                }
+                            }
+                        },
+                        labelLine: {
+                            normal: {
+                                show: false
+                            }
+                        },
+                        data: [
+                            {value: "40", name: '1号服务器'},
+                            {value: "31", name: '2号服务器'},
+                            {value: "20", name: '3号服务器'},
+                            {value: "9", name: '4号服务器'},
+                        ]
+                    }
+                ]
+            };
+            myChartThree.setOption(option);
+        }
+    });
+
+
+</script>
 </body>
 </html>

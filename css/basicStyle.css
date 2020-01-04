@@ -9,12 +9,6 @@
     text-decoration: none;
     font-max-size: 20px;
 }
-html{
-    font-size: calc(100vw * 100 / 1920);
-}
-body,html{
-    height: 100%;
-}
 ul {
     list-style: none;
 }
