@@ -105,7 +105,7 @@
         </div>
         <div class="centerBox">
             <div class="contItem" v-show="isContShow">
-               <div style="width: 100%;height: 100%">2D页面</div>
+                <div style="width: 100%;height: 100%">2D页面</div>
             </div>
             <div class="contItem" v-show="!isContShow">
                 <div id="two" style="width: 10rem;height: 9.6rem;"></div>
@@ -221,76 +221,76 @@
 <script src="js/echarts-gl.min.js"></script>
 <script>
     let vm = new Vue({
-        el:"#app",
-        data(){
-            return{
-                isContShow:true,
+        el: "#app",
+        data() {
+            return {
+                isContShow: false,
                 // isCont3DShow:false,
-                isSearchShow:true,
-                isLeftShow:true,
-                searchImgSrc:"img/search.png",
-                ttImg:"img/2-3D.png",
-                FullScreen:"img/FullScreen.png",
-                showLeft:"img/isShow.png"
+                isSearchShow: true,
+                isLeftShow: true,
+                searchImgSrc: "img/search.png",
+                ttImg: "img/2-3D.png",
+                FullScreen: "img/FullScreen.png",
+                showLeft: "img/isShow.png"
             }
         },
-        methods:{
+        methods: {
             //是否显示搜索框
-            isSearch(){
+            isSearch() {
                 this.isSearchShow = !this.isSearchShow;
-                if(this.searchImgSrc === "img/search.png"){
+                if (this.searchImgSrc === "img/search.png") {
                     this.searchImgSrc = "img/searchWhite.png";
-                }else {
+                } else {
                     this.searchImgSrc = "img/search.png";
                 }
             },
             // 是否显示左边
-            isShowLeft(){
+            isShowLeft() {
                 this.isLeftShow = !this.isLeftShow;
-                if(this.showLeft === "img/isShow.png"){
+                if (this.showLeft === "img/isShow.png") {
                     this.showLeft = "img/showBlue.png";
-                }else {
+                } else {
                     this.showLeft = "img/isShow.png";
                 }
             },
             //2D与3D切换
-            ttShow(){
+            ttShow() {
                 this.isContShow = !this.isContShow;
                 // this.isCont3DShow = !this.isCont3DShow;
             },
             //全屏显示与退出
-            fullScreenImg(){
-                if(this.FullScreen === "img/FullScreen.png"){
+            fullScreenImg() {
+                if (this.FullScreen === "img/FullScreen.png") {
                     this.FullScreen = "img/fullBlue.png";
-                }else {
+                } else {
                     this.FullScreen = "img/FullScreen.png";
                 }
                 let aaa = 1;
-                if(aaa === 1){
-                    if(document.documentElement.RequestFullScreen){
+                if (aaa === 1) {
+                    if (document.documentElement.RequestFullScreen) {
                         document.documentElement.RequestFullScreen();
                     }
                     //兼容火狐
                     console.log(document.documentElement.mozRequestFullScreen);
-                    if(document.documentElement.mozRequestFullScreen){
+                    if (document.documentElement.mozRequestFullScreen) {
                         document.documentElement.mozRequestFullScreen();
                     }
                     //兼容谷歌等可以webkitRequestFullScreen也可以webkitRequestFullscreen
-                    if(document.documentElement.webkitRequestFullScreen){
+                    if (document.documentElement.webkitRequestFullScreen) {
                         document.documentElement.webkitRequestFullScreen();
                     }
                     //兼容IE,只能写msRequestFullscreen
-                    if(document.documentElement.msRequestFullscreen){
+                    if (document.documentElement.msRequestFullscreen) {
                         document.documentElement.msRequestFullscreen();
                     }
                     aaa = 0;
                 }
-                if(aaa === 0){
-                    if(document.exitFullscreen) {
+                if (aaa === 0) {
+                    if (document.exitFullscreen) {
                         document.exitFullscreen();
-                    } else if(document.mozCancelFullScreen) {
+                    } else if (document.mozCancelFullScreen) {
                         document.mozCancelFullScreen();
-                    } else if(document.webkitExitFullscreen) {
+                    } else if (document.webkitExitFullscreen) {
                         document.webkitExitFullscreen();
                     }
                     aaa = 1;
@@ -305,6 +305,7 @@
 
         // 第一个Echarts图
         EchartsOne("EchartsOne");
+
         function EchartsOne(name) {
             // 基于准备好的dom，初始化echarts实例
             let myChart = echarts.init(document.getElementById(name));
@@ -348,8 +349,8 @@
                                         fontSize: 16
                                     }
                                 },
-                                formatter: function(params){
-                                    return "北京数据\n\n"+"中心";
+                                formatter: function (params) {
+                                    return "北京数据\n\n" + "中心";
                                 },
                                 position: 'center',
                                 show: true,
@@ -404,8 +405,8 @@
                                         fontSize: 16
                                     }
                                 },
-                                formatter: function(params){
-                                    return "重庆数据\n\n"+"中心";
+                                formatter: function (params) {
+                                    return "重庆数据\n\n" + "中心";
                                 },
                                 position: 'center',
                                 show: true,
@@ -460,8 +461,8 @@
                                         fontSize: 16
                                     }
                                 },
-                                formatter: function(params){
-                                    return "深圳数据\n\n"+"中心";
+                                formatter: function (params) {
+                                    return "深圳数据\n\n" + "中心";
                                 },
                                 position: 'center',
                                 show: true,
@@ -497,13 +498,14 @@
             // 使用刚指定的配置项和数据显示图表。
             myChart.setOption(option);
             //根据窗口的大小变动图表 --- 重点
-            window.onresize = function(){
+            window.onresize = function () {
                 myChart.resize();
             }
         }
 
         // 第二个Echarts图
         EchartsTwo("EchartsTwo");
+
         function EchartsTwo(name) {
             let myChartTwo = echarts.init(document.getElementById(name));
 
@@ -615,13 +617,14 @@
             // 使用刚指定的配置项和数据显示图表。
             myChartTwo.setOption(option);
             //根据窗口的大小变动图表 --- 重点
-            window.onresize = function(){
+            window.onresize = function () {
                 myChartTwo.resize();
             }
         }
 
         // 第三个Echarts图
         EchartsThree("EchartsThree");
+
         function EchartsThree(name) {
             let myChartThree = echarts.init(document.getElementById(name));
             option = {
@@ -631,7 +634,7 @@
                         type: 'pie',
                         radius: ['50%', '70%'],
                         avoidLabelOverlap: true,
-                        color:['#FD9D02','#4AfeA3','#2A86F5','#00FFFF'],
+                        color: ['#FD9D02', '#4AfeA3', '#2A86F5', '#00FFFF'],
                         label: {
                             normal: {
                                 show: false,
@@ -661,7 +664,7 @@
             };
             myChartThree.setOption(option);
             //根据窗口的大小变动图表 --- 重点
-            window.onresize = function(){
+            window.onresize = function () {
                 myChartThree.resize();
             }
         }
@@ -676,96 +679,33 @@
 
     $.getJSON('json/flights.json', function (data) {
 
-        //造数据
-
-        let normalScatterOption = [
-            {
-
-                name: '北京数据中心',
-                value: [116.46, 39.92],
-
-            },
-            {
-
-                name: '重庆数据中心',
-                value: [106.55, 29.57],
-
-            },
-            {
-
-                name: '深圳数据中心',
-                value: [114.05, 22.55],
-
-            }
-        ];  //正常运行
-        let freeScatterOption = [];     //空闲
-        let congestScatterOption = [];   //拥堵
-        let hitchScatterOption = [];    //故障
-
-        // 数据飞线
-        let line3D = {
-
-            type: 'lines3D',
-            effect: {
-                show: true,
-                trailWidth: 2,
-                trailLength: 0.15,
-                trailOpacity: 1,
-                trailColor: 'rgb(30, 30, 60)'
-            },
-
-            lineStyle: {
-                width: 1,
-                color: 'rgb(50, 50, 150)',
-                // color: 'rgb(118, 233, 241)',
-                opacity: 0.1
-            },
-            blendMode: 'lighter',
-
-            data: [
-                [
-                    [116.46, 39.92],
-                    [106.55, 29.57]
-                ],
-                [
-                    [116.46, 39.92],
-                    [114.05, 22.55]
-                ],
-                [
-                    [106.55, 29.57],
-                    [114.05, 22.55]
-                ]
-            ]
-        };
-
-
-        function getScatterOption(arr,length) {
+        // 造数据函数
+        // 参数 （地球上点的数组、点球上飞线数组、点的个数)
+        // 返回  [地球上的点,飞线]
+        function getScatterOption(ScatterOption, line, length) {
 
             for (let i = 0; i < length; i++) {
-
-
-                let noramlAirports = data.airports[parseInt(Math.random() * 8000)]
-
-                arr.push({
+                let noramlAirports = data.airports[parseInt(Math.random() * 8000)];
+                //点
+                ScatterOption.push({
 
                     name: noramlAirports[0] + '数据中心',
                     value: [noramlAirports[3], noramlAirports[4]],
 
                 });
+                // 飞线
 
-                //飞线
                 if (i == 0) {
-                    line3D.data.push(
+                    line.push(
                         [
                             [114.05, 22.55],
                             [noramlAirports[3], noramlAirports[4]]
                         ])
 
-                }
-                else {
-                    line3D.data.push(
+                } else {
+                    line.push(
                         [
-                            line3D.data[i - 1][1],
+                            line[i - 1][1],
                             [noramlAirports[3], noramlAirports[4]]
                         ])
 
@@ -776,17 +716,65 @@
 
             // console.log('arr:', arr)
 
-            return arr;
+            return [ScatterOption, line];
 
         }
 
-        normalScatterOption = getScatterOption(normalScatterOption,80);
-        freeScatterOption = getScatterOption(freeScatterOption,10);
-        congestScatterOption = getScatterOption(congestScatterOption,5);
-        hitchScatterOption = getScatterOption(hitchScatterOption,5);
+        // 定义地球的点
+        let normalScatterOption = [
+            {
 
-        var series = [
+                name: '北京数据中心',
+                value: [116.46, 39.92]
+            },
+            {
+                name: '重庆数据中心',
+                value: [106.55, 29.57]
+            },
+            {
+                name: '深圳数据中心',
+                value: [114.05, 22.55],
+            }
+        ];   //正常运行
+        let freeScatterOption = [];        //空闲
+        let congestScatterOption = [];     //拥堵
+        let hitchScatterOption = [];       //故障
 
+        // 定义地球的飞线
+        let normalLine3D = [
+            [
+                [116.46, 39.92], //北京到重庆
+                [106.55, 29.57]
+            ],
+            [
+                [116.46, 39.92],//北京到深圳
+                [114.05, 22.55]
+            ],
+            [
+                [106.55, 29.57],//重庆到深圳
+                [114.05, 22.55]
+            ]
+        ]
+        let freeLine3D = [];
+        let congestLine3D = [];
+        let hitchLine3D = [];
+
+
+        let normal = getScatterOption(normalScatterOption, normalLine3D, 80);
+        normalScatterOption = normal[0]; //点
+        normalLine3D = normal[1];        //线
+        let free = getScatterOption(freeScatterOption, freeLine3D, 10);
+        freeScatterOption = free[0];    //点
+        freeLine3D = free[1];           //线
+        let congest = getScatterOption(congestScatterOption, congestLine3D, 5);
+        congestScatterOption = congest[0];//点
+        congestLine3D = congest[1];       //线
+        let hitch = getScatterOption(hitchScatterOption, hitchLine3D, 5);
+        hitchScatterOption = hitch[0];    //点
+        hitchLine3D = hitch[1];           //线
+
+        let series = [
+            //地球上的点
             {
                 type: 'scatter3D',
                 name: "正常",
@@ -816,7 +804,6 @@
                 data: normalScatterOption
 
             },
-
             {
                 type: 'scatter3D',
                 name: "空闲",
@@ -837,9 +824,10 @@
                     },
 
                     textStyle: {
-                        color: '#000000',
+                        color: '#363FFF',
                         fontSize: 18,
-                        background: "transparent"
+                        background: "transparent",
+                        opacity: 1,
                     },
                 },
                 data: freeScatterOption
@@ -900,26 +888,99 @@
                     },
                 },
                 data: hitchScatterOption
+            },
+            //飞线
+            {
+
+                type: 'lines3D',
+                name: "正常",
+                effect: {
+                    show: true,
+                    trailWidth: 2,
+                    trailLength: 0.15,
+                    trailOpacity: 1,
+                    trailColor: 'rgb(30, 30, 60)'
+                },
+
+                lineStyle: {
+                    width: 1,
+                    color: 'rgb(50, 50, 150)',
+                    // color: 'rgb(118, 233, 241)',
+                    opacity: 0.1
+                },
+                blendMode: 'lighter',
+
+                data: normalLine3D
+            },
+            {
+
+                type: 'lines3D',
+                name: "空闲",
+                effect: {
+                    show: true,
+                    trailWidth: 2,
+                    trailLength: 0.15,
+                    trailOpacity: 1,
+                    trailColor: 'rgb(30, 30, 60)'
+                },
+
+                lineStyle: {
+                    width: 1,
+                    color: 'rgb(50, 50, 150)',
+                    // color: 'rgb(118, 233, 241)',
+                    opacity: 0.1
+                },
+                blendMode: 'lighter',
+
+                data: freeLine3D
+            },
+            {
+
+                type: 'lines3D',
+                name: "拥堵",
+                effect: {
+                    show: true,
+                    trailWidth: 2,
+                    trailLength: 0.15,
+                    trailOpacity: 1,
+                    trailColor: 'rgb(30, 30, 60)'
+                },
+
+                lineStyle: {
+                    width: 1,
+                    color: 'rgb(50, 50, 150)',
+                    // color: 'rgb(118, 233, 241)',
+                    opacity: 0.1
+                },
+                blendMode: 'lighter',
+
+                data: congestLine3D
+            },
+            {
+
+                type: 'lines3D',
+                name: "故障",
+                effect: {
+                    show: true,
+                    trailWidth: 2,
+                    trailLength: 0.15,
+                    trailOpacity: 1,
+                    trailColor: 'rgb(30, 30, 60)'
+                },
+
+                lineStyle: {
+                    width: 1,
+                    color: 'rgb(50, 50, 150)',
+                    // color: 'rgb(118, 233, 241)',
+                    opacity: 0.1
+                },
+                blendMode: 'lighter',
+
+                data: hitchLine3D
             }
-        ]
+        ];
 
-        let length = line3D.data.length;
-
-        for (let i = 0; i < length; i++) {
-
-            if (line3D.data.length >= 1000) break;
-
-            for (let j = 1; j < length; j++) {
-                line3D.data.push([
-                    line3D.data[i][0],
-                    line3D.data[j][0]
-
-                ]);
-
-            }
-        }
-
-        series.push(line3D);
+        // console.log(series);
 
         let option = {
             legend: {
@@ -978,7 +1039,8 @@
                     autoRotate: false,
                     autoRotateSpeed: 5,
                     distance: 400,
-                    targetCoord: [116.46, 39.92]
+                    targetCoord: [116.46, 39.92],
+                    zoomSensitivity : 3,
                 },
                 silent: true
             },
@@ -1005,10 +1067,6 @@
         //     // $("#dataCenterName").
         // })
     });
-
-
-
-
 
 
 </script>
