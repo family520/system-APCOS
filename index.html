@@ -20,7 +20,7 @@
                 <input type="text" placeholder="搜索...">
             </div>
             <img class="searchImg" @click="isSearch()" :src="searchImgSrc" alt="">
-            <img class="DImg" :src="ttImg" alt="">
+            <img class="DImg" @click="ttShow()" :src="ttImg" alt="">
             <img class="fullScreenImg" @click="fullScreenImg()" :src="FullScreen" alt="">
             <img class="isShowImg" @click="isShowLeft()" :src="showLeft" alt="">
         </div>
@@ -104,7 +104,12 @@
             </div>
         </div>
         <div class="centerBox">
-            <div id="two" style="width: 100%;height: 100%;border: 1px solid red"></div>
+            <div class="contItem" v-show="isContShow">
+               <div style="width: 100%;height: 100%">2D页面</div>
+            </div>
+            <div class="contItem" v-show="!isContShow">
+                <div id="two" style="width: 10rem;height: 9.6rem;"></div>
+            </div>
         </div>
         <div class="rightBox">
             <div class="itemBox" style="height: 98%">
@@ -219,6 +224,8 @@
         el:"#app",
         data(){
             return{
+                isContShow:true,
+                // isCont3DShow:false,
                 isSearchShow:true,
                 isLeftShow:true,
                 searchImgSrc:"img/search.png",
@@ -245,6 +252,11 @@
                 }else {
                     this.showLeft = "img/isShow.png";
                 }
+            },
+            //2D与3D切换
+            ttShow(){
+                this.isContShow = !this.isContShow;
+                // this.isCont3DShow = !this.isCont3DShow;
             },
             //全屏显示与退出
             fullScreenImg(){
