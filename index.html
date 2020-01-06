@@ -15,18 +15,18 @@
     <div class="header">
         <span class="title">APCOS服务自检运营系统</span>
         <div class="settingBox">
-            <div class="inputBox" v-show="isShow">
+            <div class="inputBox" v-show="isSearchShow">
                 <i></i>
                 <input type="text" placeholder="搜索...">
             </div>
             <img class="searchImg" @click="isSearch()" :src="searchImgSrc" alt="">
             <img class="DImg" src="img/2-3D.png" alt="">
             <img class="fullScreenImg" @click="fullScreenImg()" src="img/FullScreen.png" alt="">
-            <img class="isShowImg" src="img/isShow.png" alt="">
+            <img class="isShowImg" @click="isShowLeft()" src="img/isShow.png" alt="">
         </div>
     </div>
     <div class="contentBox">
-        <div class="leftBox">
+        <div class="leftBox" v-show="isLeftShow">
             <div class="itemBox">
                 <span class="iconBox"></span>
                 <p class="titleBox">
@@ -65,7 +65,7 @@
                     <span>故障挂机率/<span style="font-size: 0.08rem">FAULT HANG RATE</span></span>
                 </p>
                 <div class="threeBox">
-                    <div id="EchartsThree" style="width: 2.2rem;height: 2.2rem;margin: 0.1rem 0;"></div>
+                    <div id="EchartsThree" style="width: 2.4rem;height: 2.4rem;margin: 0.1rem 0;"></div>
                     <div class="threeTest">
                         <div class="testItem">
                             <i style="background-color: #FD9D02"></i>
@@ -177,18 +177,32 @@
                         <div class="imgBox">
                             <img src="img/userImg.png" alt="">
                         </div>
-                        <div>
+                        <div class="userBox">
                             <p>
                                 <img src="img/userIcon.png" alt="">
-                                <span></span>
+                                <span class="userTest">曹登化</span>
                             </p>
                             <p>
                                 <img src="img/telIcon.png" alt="">
-                                <span></span>
+                                <span class="userTest">13123548562</span>
                             </p>
                             <p>
                                 <img src="img/homeIcon.png" alt="">
-                                <span></span>
+                                <span class="userTest">重庆研究院</span>
+                            </p>
+                            <p>
+                                <span class="clName">以处理事项:</span>
+                                <span class="jdBox">
+                                    <span style="width: 60%;background-color: #0082FD;"></span>
+                                </span>
+                                <span class="number">65%</span>
+                            </p>
+                            <p>
+                                <span class="clName">以处理事项:</span>
+                                <span class="jdBox">
+                                    <span style="width: 40%;background-color: #FD663F"></span>
+                                </span>
+                                <span class="number">40%</span>
                             </p>
                         </div>
                     </div>
@@ -204,14 +218,19 @@
         el:"#app",
         data(){
             return{
-                isShow:true,
+                isSearchShow:true,
+                isLeftShow:true,
                 searchImgSrc:"img/search.png"
             }
         },
         methods:{
             //是否显示搜索框
             isSearch(){
-                this.isShow = !this.isShow;
+                this.isSearchShow = !this.isSearchShow;
+            },
+            // 是否显示左边
+            isShowLeft(){
+                this.isLeftShow = !this.isLeftShow;
             },
             //全屏显示
             fullScreenImg(){
@@ -511,19 +530,19 @@
                     symbolSize: 6,
                     lineStyle: {
                         normal: {
-                            color: "#fff", // 线条颜色
+                            color: "#00FFFF", // 线条颜色
                         },
                     },
                     label: {
                         show: true,
                         position: 'top',
                         textStyle: {
-                            color: '#fff',
+                            color: '#00FFFF',
                         }
                     },
                     itemStyle: {
                         color: "red",
-                        borderColor: "#fff",
+                        borderColor: "#00FFFF",
                         borderWidth: 3
                     },
                     tooltip: {
