@@ -402,3 +402,18 @@ body,html{
     /*width: 95%;*/
     height: 100%;
 }
+
+
+/*地球标签样式*/
+.tooltip{
+    display: inline-block;
+}
+#toolTitle{
+    width: 0.15rem;
+    height: 0.15rem;
+    border-radius: 50%;
+}
+
+
+
+

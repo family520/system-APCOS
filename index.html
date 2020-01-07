@@ -692,7 +692,7 @@
                     // name: noramlAirports[0] + '数据中心',
                     name: noramlAirports[0],
                     value: [noramlAirports[3], noramlAirports[4]],
-
+                    run : "75%"
                 });
                 // 飞线
 
@@ -726,15 +726,18 @@
             {
 
                 name: 'BeiJing',
-                value: [116.46, 39.92]
+                value: [116.46, 39.92],
+                run : "75%"
             },
             {
                 name: 'Chongqing',
-                value: [106.55, 29.57]
+                value: [106.55, 29.57],
+                run : "75%"
             },
             {
                 name: 'Shenzhen',
                 value: [114.05, 22.55],
+                run : "75%"
             }
         ];   //正常运行
         let freeScatterOption = [];        //空闲
@@ -786,16 +789,16 @@
                 // symbol : "circle",
                 label: {
                     show: true,
-                    position : "bottom",
+                    position  : "top",
                     formatter: '{b}',
-                    // itemStyle: {
-                    //     color: "#363FFF", //颜色
-                    //     opacity: 1,
-                    // },
+                    itemStyle: {
+                        color: "#363FFF", //颜色
+                        opacity: 1,
+                    },
 
                     textStyle: {
                         color: '#fff',
-                        fontSize: 14,
+                        fontSize: 18,
                         backgroundColor : "transparent"
                     },
                 },
@@ -820,6 +823,7 @@
                 },
                 label: {
                     show: true,
+                    position  : "top",
                     formatter: '{b}',
                     itemStyle: {
                         color: "#363FFF", //颜色
@@ -849,6 +853,7 @@
                 symbol: 'path://M512 123.19c-19.73 0-39.47 3.71-54.46 11.21L140.06 293.15c-30 15-30 39.48 0 54.46l317.45 158.76c15.05 7.49 34.79 11.21 54.52 11.21s39.48-3.72 54.46-11.21L884 347.61c30-15 30-39.47 0-54.46L566.49 134.4c-15-7.5-34.72-11.21-54.46-11.21z m0 588.36c-24.36 0-48.67-4.87-68.1-14.56L132.87 541.52A30.48 30.48 0 0 1 160.16 487l311 155.53c21.44 10.72 60.31 10.72 81.75 0L863.9 487a30.47 30.47 0 0 1 27.24 54.52L580.14 697A155.78 155.78 0 0 1 512 711.55z m0 188.85c-24.36 0-48.67-4.87-68.1-14.56l-311-155.53a30.44 30.44 0 1 1 27.23-54.46l311 155.53c21.44 10.72 60.31 10.72 81.75 0l311-155.53a30.47 30.47 0 1 1 27.24 54.52l-311 155.47c-19.41 9.75-43.72 14.56-68.12 14.56z',
                 label: {
                     show: true,
+                    position  : "top",
                     formatter: '{b}',
                     itemStyle: {
                         color: "#363FFF", //颜色
@@ -877,6 +882,7 @@
                 symbol: 'path://M512 123.19c-19.73 0-39.47 3.71-54.46 11.21L140.06 293.15c-30 15-30 39.48 0 54.46l317.45 158.76c15.05 7.49 34.79 11.21 54.52 11.21s39.48-3.72 54.46-11.21L884 347.61c30-15 30-39.47 0-54.46L566.49 134.4c-15-7.5-34.72-11.21-54.46-11.21z m0 588.36c-24.36 0-48.67-4.87-68.1-14.56L132.87 541.52A30.48 30.48 0 0 1 160.16 487l311 155.53c21.44 10.72 60.31 10.72 81.75 0L863.9 487a30.47 30.47 0 0 1 27.24 54.52L580.14 697A155.78 155.78 0 0 1 512 711.55z m0 188.85c-24.36 0-48.67-4.87-68.1-14.56l-311-155.53a30.44 30.44 0 1 1 27.23-54.46l311 155.53c21.44 10.72 60.31 10.72 81.75 0l311-155.53a30.47 30.47 0 1 1 27.24 54.52l-311 155.47c-19.41 9.75-43.72 14.56-68.12 14.56z',
                 label: {
                     show: true,
+                    position  : "top",
                     formatter: '{b}',
                     itemStyle: {
                         color: "#363FFF", //颜色
@@ -985,6 +991,25 @@
         // console.log(series);
 
         let option = {
+            tooltip: {
+                enterable:true,
+                confine : true,
+                position : "top",
+                formatter: function (params) {
+                    // console.log(params)
+                    var res = '<span class="tooltip" ' +
+                        'style="background:'+params.color+'" id="toolTitle"></span><br/>';
+                    res +=  params.name+ '数据中心<br/>';
+                    res += '<span class="tooltip" id="toolResource">资源占用率：'+ params.data.run+ '</span><br/>';
+                    res += '<span class="tooltip" id="toolRunStatus">运行状态：' + params.seriesName+ '</span><br/>';
+                    res += '<span class="tooltip" id="toolDetailed">详情>></span><br/>';
+                    // console.log(" name"+params[0].name);
+                    return res;
+                },
+                backgroundColor : 'rgba(2,15,48,0.7)',
+                padding : [5,20,5]
+
+            },
             legend: {
                 selectedMode: 'false',
                 left: 'center',
@@ -1045,14 +1070,6 @@
                     zoomSensitivity : 3,
                 },
                 silent: true
-            },
-            dataset: {
-                source: [
-                    // 有了上面 dimensions 定义后，下面这五个维度的名称分别为：
-                    ['date', 'open', 'close', 'highest', 'lowest']
-                    [12, 44, 55, 66, 2],
-                    [23, 6, 16, 23, 1],
-                ]
             },
             series: series
         }
