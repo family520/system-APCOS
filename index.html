@@ -118,6 +118,19 @@
                     <img src="img/icon001.png" alt="">
                     <span id="dataCenterName">数据中心详情/<span style="font-size: 0.08rem">DATA CENTER DETAILS</span></span>
                 </p>
+                <div class="selectBox">
+                    <span class="checked">重庆数据中心</span>
+                    <i></i>
+                    <ul class="selectUL">
+                        <li>重庆数据中心</li>
+                        <li>深圳数据中心</li>
+                        <li>北京数据中心</li>
+                        <li>北京数据中心</li>
+                        <li>北京数据中心</li>
+                        <li>北京数据中心</li>
+                        <li>北京数据中心</li>
+                    </ul>
+                </div>
                 <div class="contBox">
                     <p class="titleNav">承载能力</p>
                     <div class="czBox">
@@ -305,7 +318,6 @@
 
         // 第一个Echarts图
         EchartsOne("EchartsOne");
-
         function EchartsOne(name) {
             // 基于准备好的dom，初始化echarts实例
             let myChart = echarts.init(document.getElementById(name));
@@ -505,7 +517,6 @@
 
         // 第二个Echarts图
         EchartsTwo("EchartsTwo");
-
         function EchartsTwo(name) {
             let myChartTwo = echarts.init(document.getElementById(name));
 
@@ -591,7 +602,7 @@
                         }
                     },
                     itemStyle: {
-                        color: "red",
+                        color: "#00FFFF",
                         borderColor: "#00FFFF",
                         borderWidth: 3
                     },
@@ -624,7 +635,6 @@
 
         // 第三个Echarts图
         EchartsThree("EchartsThree");
-
         function EchartsThree(name) {
             let myChartThree = echarts.init(document.getElementById(name));
             option = {
@@ -668,6 +678,23 @@
                 myChartThree.resize();
             }
         }
+
+        //下拉选择
+        $(".selectBox > span").on('click',function () {
+            $(".selectUL").show();
+            $(".selectUL > li").on("click",function () {
+                $(".selectBox > span").text($(this).text());
+                $(".selectUL").hide();
+            });
+
+        });
+        // 点击空白处 隐藏
+        $(document).bind("click",function(e){
+            let con_one=$("body .selectBox");//设置目标区域
+            if(!con_one.is(e.target) && con_one.has(e.target).length===0){
+                $(".selectUL").hide();//需要隐藏的元素
+            }
+        });
 
     });
 
