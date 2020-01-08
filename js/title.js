@@ -9,7 +9,10 @@ let vm = new Vue({
             searchImgSrc: "img/search.png",
             ttImg: "img/2-3D.png",
             FullScreen: "img/FullScreen.png",
-            showLeft: "img/isShow.png"
+            showLeft: "img/isShow.png",
+            dataCenterSelectItems: [], //数据中心下拉菜单中数据数组
+            searchInputData : "", //搜索框的值
+
         }
     },
     methods: {
@@ -73,6 +76,26 @@ let vm = new Vue({
                 }
                 aaa = 1;
             }
+        },
+        //搜索、下拉定位 地球点
+        earthDataCenterPosition(positionVal){
+            if(positionVal){
+                myChart_twoOption.globe.viewControl.targetCoord = positionVal;
+                myChart_two.setOption(myChart_twoOption,true)
+            }else {
+                for(let i = 0 ; i< this.dataCenterSelectItems.length; i ++){
+
+                    let dataData = (this.dataCenterSelectItems[i].name).toLocaleLowerCase(); //dataCenterSelectItems里面的数据
+                    let inputData = (this.searchInputData).toLocaleLowerCase() + "数据中心";  // 输入框的值
+                    if(dataData === inputData){
+                        myChart_twoOption.globe.viewControl.targetCoord = this.dataCenterSelectItems[i].value;
+                        myChart_two.setOption(myChart_twoOption,true);
+                        this.searchInputData = "";
+                    }
+                }
+            }
         }
     }
 });
+
+let myChart_twoOption; // 地图的配置选项

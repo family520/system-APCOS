@@ -1,7 +1,7 @@
-let myChart = echarts.init(document.getElementById('two'));
+<!-- 中间Map -->
+let myChart_two = echarts.init(document.getElementById('two'));
 
 $.getJSON('json/flights.json', function (data) {
-
     // 造数据函数
     // 参数 （地球上点的数组、点球上飞线数组、点的个数)
     // 返回  [地球上的点,飞线]
@@ -17,8 +17,13 @@ $.getJSON('json/flights.json', function (data) {
                 value: [noramlAirports[3], noramlAirports[4]],
                 run : "75%"
             });
-            // 飞线
+            //数据中心下拉框数据
+            dataCenterSelectItems.push({
+                name: noramlAirports[0] + '数据中心',
+                value: [noramlAirports[3], noramlAirports[4]],
+            });
 
+            // 飞线
             if (i === 0) {
                 line.push(
                     [
@@ -43,7 +48,21 @@ $.getJSON('json/flights.json', function (data) {
         return [ScatterOption, line];
 
     }
-
+    //定义 数据中心下拉菜单中数据数组 也就是所有的点
+    let dataCenterSelectItems = [
+        {
+            name: 'Beijing数据中心',
+            value: [116.46, 39.92]
+        },
+        {
+            name: 'Chongqing数据中心',
+            value: [106.55, 29.57]
+        },
+        {
+            name: 'Shenzhen数据中心',
+            value: [114.05, 22.55]
+        }
+    ];
     // 定义地球的点
     let normalScatterOption = [
         {
@@ -66,7 +85,6 @@ $.getJSON('json/flights.json', function (data) {
     let freeScatterOption = [];        //空闲
     let congestScatterOption = [];     //拥堵
     let hitchScatterOption = [];       //故障
-
     // 定义地球的飞线
     let normalLine3D = [
         [
@@ -86,7 +104,6 @@ $.getJSON('json/flights.json', function (data) {
     let congestLine3D = [];
     let hitchLine3D = [];
 
-
     let normal = getScatterOption(normalScatterOption, normalLine3D, 80);
     normalScatterOption = normal[0]; //点
     normalLine3D = normal[1];        //线
@@ -99,6 +116,8 @@ $.getJSON('json/flights.json', function (data) {
     let hitch = getScatterOption(hitchScatterOption, hitchLine3D, 5);
     hitchScatterOption = hitch[0];    //点
     hitchLine3D = hitch[1];           //线
+
+    vm.dataCenterSelectItems = dataCenterSelectItems;
 
     let series = [
         //地球上的点
@@ -310,10 +329,7 @@ $.getJSON('json/flights.json', function (data) {
             data: hitchLine3D
         }
     ];
-
-    // console.log(series);
-
-    let option = {
+    myChart_twoOption = {
         backgroundColor:'#000019',
         tooltip: {
             enterable:true,
@@ -374,9 +390,21 @@ $.getJSON('json/flights.json', function (data) {
         series: series
     };
 
-    myChart.setOption(option);
-    window.onresize = function()
-    {
-        myChart.resize();
-    }
+    myChart_two.setOption(myChart_twoOption);
+
+    // window.addEventListener('keydown', function () {
+    //     series.forEach(function (series, idx) {
+    //         myChart.dispatchAction({
+    //             type: 'lines3DToggleEffect',
+    //             seriesIndex: idx
+    //         });
+    //     })
+    // });
+
+    // 改变右侧数据
+    myChart_two.on('click', function (params){
+        console.log('params:', params.value)
+        // console.log(option.globe.viewControl.targetCoord);
+        // $("#dataCenterName").
+    })
 });

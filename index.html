@@ -32,7 +32,9 @@
         <div class="settingBox">
             <div class="inputBox" v-show="isSearchShow">
                 <i></i>
-                <input type="text" placeholder="搜索...">
+                <input type="text" placeholder="搜索..."
+                    v-model="searchInputData"
+                    @keyup.13 ="earthDataCenterPosition()">
             </div>
             <img class="searchImg" @click="isSearch()" :src="searchImgSrc" alt="">
             <img class="DImg" @click="ttShow()" :src="ttImg" alt="">
@@ -48,7 +50,7 @@
                     <img src="img/icon001.png" alt="">
                     <span>数据中心总量/<span style="font-size: 0.08rem">TOTAL DATA CENTER</span></span>
                 </p>
-                <div id="EchartsOne" class="EchartsBox" style="height: 120px;width: 100%;margin: 0.1rem 0;"></div>
+                <div id="EchartsOne" class="EchartsBox" style="height: 1.2rem;width: 4.2rem;margin: 0.1rem 0;"></div>
                 <div class="textBox">
                     <div class="testItemBox">
                         <span><i style="background-color: #6EFFB5"></i>资源占有率: 25%</span>
@@ -134,16 +136,14 @@
                     <span id="dataCenterName">数据中心详情/<span style="font-size: 0.08rem">DATA CENTER DETAILS</span></span>
                 </p>
                 <div class="selectBox">
-                    <span class="checked">重庆数据中心</span>
+                    <span class="checked">北京数据中心</span>
                     <i></i>
-                    <ul class="selectUL">
-                        <li>重庆数据中心</li>
-                        <li>深圳数据中心</li>
-                        <li>北京数据中心</li>
-                        <li>北京数据中心</li>
-                        <li>北京数据中心</li>
-                        <li>北京数据中心</li>
-                        <li>北京数据中心</li>
+                    <ul class="selectUL" >
+                        <li v-for="(item,key,i) in dataCenterSelectItems"
+                            :key="i"
+                            @click = "earthDataCenterPosition(item.value)"
+                            :title = "item.name+'数据中心'">{{item.name}}</li>
+
                     </ul>
                 </div>
                 <div class="contBox">

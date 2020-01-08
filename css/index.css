@@ -436,7 +436,7 @@ body,html{
     下拉选择
 */
 .selectBox{
-    width: 1.52rem;
+    width: 100%;
     height: 0.3rem;
     position: relative;
     border-radius: 0.15rem;
@@ -490,6 +490,7 @@ body,html{
     letter-spacing: 0.008rem;
     color: #ffffff;
     cursor: pointer;
+    overflow: hidden;
 }
 .selectBox ul li:hover{
     background-color: #26537D;
