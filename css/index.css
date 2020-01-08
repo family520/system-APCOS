@@ -13,6 +13,7 @@ span{
 body,html{
     width: 100%;
     height: 100%;
+    /*min-width: 1000px;*/
     font-size: calc(100vw * 100 / 1920);
     background-color: #000019;
 }
@@ -116,7 +117,7 @@ body,html{
 /*公用盒子样式*/
 .itemBox{
     width: 100%;
-    margin-bottom: 0.1rem;
+    margin-bottom: 0.3rem;
     position: relative;
     padding: 0.05rem 0;
     border-top: 1px solid #4D4D5E;
@@ -164,6 +165,8 @@ body,html{
     padding: 0.2rem;
     height: 100%;
     width: 4.4rem;
+    min-width: 300px;
+    /*overflow-x: auto;*/
     color: white;
     z-index: 10;
 }
@@ -192,13 +195,14 @@ body,html{
 .testItemBox span{
     display: flex;
     align-items: center;
+    line-height: 0.2rem;
     justify-content: center;
     margin: 0.05rem 0;
     font-family: MicrosoftYaHei;
     font-size: 0.12rem;
     font-weight: normal;
     font-stretch: normal;
-    line-height: 0.12rem;
+    /*line-height: 0.12rem;*/
     letter-spacing: 0rem;
     color: #ffffff;
 }
@@ -257,15 +261,23 @@ body,html{
     右边样式
 */
 .contentBox .rightBox{
+    position: absolute;
+    top: 0;
+    right: 0;
     height: 100%;
     width: 4rem;
+    min-width: 360px;
     padding:0.2rem;
     color: white;
 }
-
+.contentBox .rightBox .itemBox{
+    /*min-height: 700px;*/
+    border: 1px solid red;
+}
 .contentBox .rightBox .contBox{
     width: 100%;
-    height: 94%;
+    margin-bottom: 0.2rem;
+    /*height: 94%;*/
 }
 .contentBox .rightBox .contBox .titleNav{
     font-family: MicrosoftYaHei-Bold;
@@ -334,7 +346,7 @@ body,html{
 }
 
 .infoBox{
-    width: 100%;
+    /*width: 100%;*/
     height: 1.49rem;
     margin-top: 0.2rem;
     margin-left: 2%;
