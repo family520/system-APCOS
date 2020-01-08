@@ -2,210 +2,454 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>智能声光报警器</title>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
 </head>
-<body>
-    <div id="main" style="width:600px;height: 600px"></div>
-</body>
-<script src="js/jquery.min.js"></script>
-<script src="js/echars_4.4.0.min.js"></script>
-<script>
-    $(function () {
-        EchartsOne("main");
-        function EchartsOne(name) {
-            // 基于准备好的dom，初始化echarts实例
-            var myChart = echarts.init(document.getElementById(name));
+<style>
+    *{
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+    }
+    body,html{
+        height: 100%;
+        width: 100%;
+        overflow: hidden;
+        padding: 21px 20px;
+        background-color: #F5F5F5;
+        min-width: 700px !important;
+    }
+    /* KEYFRAMES */
+    @keyframes pulse {
+        from {
+            opacity: 1;
+            transform: scale(1);
+        }
+        to {
+            opacity: .25;
+            transform: scale(.75);
+        }
+    }
 
-            // 指定图表的配置项和数据
-            var dataStyle = {
-                normal: {
-                    label: {
-                        show: false
-                    },
-                    labelLine: {
-                        show: false
-                    },
-                    shadowBlur: 0,
-                    shadowColor: '#203665'
+    .pulse-container {
+        width: 80px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-left: 10px;
+    }
+
+    .pulse-bubble {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background-color: #0099FF;
+    }
+    .pulse-bubble-1 {
+        animation: pulse .8s ease 0s infinite alternate;
+    }
+    .pulse-bubble-2 {
+        animation: pulse .8s ease .2s infinite alternate;
+    }
+    .pulse-bubble-3 {
+        animation: pulse .8s ease .4s infinite alternate;
+    }
+    /*
+        头部样式
+    */
+    .header{
+        width: 100%;
+        display: flex;
+        align-items: center;
+        position: relative;
+    }
+    .header .titleName{
+        font-size:24px;
+        font-weight:400;
+        color:rgba(51,51,51,1);
+    }
+    .header .outInter{
+        width:80px;
+        height:30px;
+        line-height: 30px;
+        background:rgba(153,153,153,1);
+        border-radius:15px;
+        text-align: center;
+        color: white;
+        font-weight: bold;
+        position: absolute;
+        top:0;
+        right: 0;
+        letter-spacing: 2px;
+    }
+
+    /*开关按钮样式*/
+    .checkBox{
+        margin: auto;
+        width:80px;
+        height:30px;
+        background:rgba(220,220,220,1);
+        border-radius:4px;
+        display: flex;
+        padding: 2px 3px;
+        box-sizing: border-box;
+        justify-content: space-between;
+        line-height: 30px;
+        margin-top: 0.1rem;
+        margin-bottom: 0.1rem;
+    }
+    .checkBox span{
+        width: 48%;
+        height: 26px;
+        display: inline-block;
+        background-color: white;
+        font-size: 14px;
+        cursor: pointer;
+        font-weight: bold;
+        color:rgba(153,153,153,1);
+    }
+    .checkBox span.active{
+        background-color: #0099FF;
+        color: white;
+    }
+    .checkBox .on {
+        border-radius: 4px 0 0 4px;
+    }
+    .checkBox .off {
+        border-radius: 0 4px 4px 0;
+    }
+    /*
+        内容盒子
+    */
+    .contentBox{
+        width: 350px;
+        /*height: 450px;*/
+        background-color: white;
+        overflow: hidden;
+        position: relative;
+        padding: 10px 0;
+        box-sizing: border-box;
+        margin: auto;
+        margin-top: 2rem;
+        text-align: center;
+    }
+    .contentBox .imgBox{
+        display: flex;
+        justify-content: center;
+        margin-top: 10px;
+        position: relative;
+    }
+    .contentBox .imgBox .shuaxin{
+        position: absolute;
+        top:0;
+        right:20px;
+        width:23px;
+        height:23px;
+        cursor:pointer;
+    }
+    .contentBox .title{
+        margin: 10px 0;
+        font-size:18px;
+        font-weight:400;
+        color:rgba(51,51,51,1);
+    }
+
+
+
+    /*红外学习模板样式*/
+    .hwxxTemplate{
+        position: absolute;
+        top:0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.2);
+        display: none;
+    }
+    .hwxxTemplate .hwxxBox{
+        position: absolute;
+        top:50%;
+        left: 50%;
+        transform: translate(-230px,-135px);
+        width:460px;
+        /*height:269px;*/
+        background:rgba(255,255,255,1);
+        margin-left: auto;
+        padding-bottom: 10px;
+    }
+    .hwxxTemplate .hwxxBox .headerBox{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 50px;
+        line-height: 50px;
+        width: 100%;
+        padding:0 30px;
+        border-bottom: 1px solid #CCC;
+    }
+    .hwxxTemplate .hwxxBox .headerBox span{
+        font-size:14px;
+        font-weight:400;
+        color:rgba(51,51,51,1);
+    }
+    .hwxxTemplate .hwxxBox .headerBox img{
+        width: 18px;
+        height: 18px;
+    }
+    .hwxxTemplate .oneTpl{
+        width: 100%;
+        height: auto;
+        margin-top: 20px;
+    }
+    .hwxxTemplate .oneTpl .oneTplItem{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 15px 0;
+    }
+    .hwxxTemplate .oneTpl .oneTplItem span{
+        font-size:14px;
+        font-weight:400;
+        color:rgba(51,51,51,1);
+        display: inline-block;
+        width: 70px;
+    }
+    .hwxxTemplate .oneTpl .oneTplItem input,
+    .hwxxTemplate .oneTpl .oneTplItem select{
+        width:200px;
+        height:26px;
+        background:rgba(255,255,255,1);
+        border:1px solid rgba(220,220,220,1);
+        box-shadow:0px 0px 8px 0px rgba(51,51,51,0.1);
+        border-radius:4px;
+        margin: 0 5px;
+    }
+    .hwxxTemplate .oneTpl .oneTplItem img{
+        margin-left: 5px;
+    }
+
+    /*装置防拆*/
+    .btns{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .btns>div{
+        width: 88px;
+        height: 25px;
+        border-radius: 3px;
+        margin: 24px 2px 0;
+    }
+    .btns>div:nth-child(2){
+        background-color: #ff0000;
+        color: #ffffff;
+        cursor: pointer;
+    }
+    .btn{
+        background-color: #0099ff;
+        color: #ffffff;
+        cursor: pointer;
+    }
+    .btns>.sendOrder{
+        width: 180px;
+        height: 25px;
+    }
+    .addr{
+        margin-top: 20px;
+        font-size: 14px;
+        color: #333333;
+        text-align: center;
+    }
+    .btns>button{
+        width: 103px;
+        height: 30px;
+        background-color: #0066ff;
+        border-radius: 15px;
+        border: none;
+        margin: 0 25px;
+        color: #fff;
+    }
+    .btns>button:last-child{
+        background-color: #b5b5b5;
+    }
+
+
+
+</style>
+<body>
+<!--共用头部盒子-->
+<div class="header">
+    <span class="titleName">智能声光报警器</span>
+    <div class="pulse-container">
+        <div class="pulse-bubble pulse-bubble-1"></div>
+        <div class="pulse-bubble pulse-bubble-2"></div>
+        <div class="pulse-bubble pulse-bubble-3"></div>
+    </div>
+    <!--<span class="outInter">退网</span>-->
+</div>
+<!--内容盒子-->
+<div class="contentBox">
+    <div class="imgBox">
+        <img class="imgIcon" src="http://113.204.9.70:3333/images/2019/10/14/4be9dafa54012dff7f541aa9fa3fa83d.png" alt="">
+        <!--<img class="shuaxin" src="http://113.204.9.70:3333/images/2019/09/09/134561c1e90b03dbe.png" alt="">-->
+    </div>
+    <!--标题-->
+    <h4 class="title">智能声光报警器</h4>
+    <!--装置防拆-->
+    <div class="btns">
+        <div>装置防拆</div>
+        <div>装置被拆</div>
+        <div class="btn">装置未拆</div>
+    </div>
+
+    <div class="btns">
+        <div class="btn sendOrder hwxx001">下发命令报警</div>
+    </div>
+
+    <div class="addr">
+        位置：******
+    </div>
+
+</div>
+<!--红外学习模板-->
+<div class="hwxxTemplate">
+    <div class="hwxxBox">
+        <div class="headerBox">
+            <span>下发命令报警</span>
+            <img class="outTpl" style="cursor:pointer;" src="http://113.204.9.70:3333/images/2019/09/20/-10.png" alt="">
+        </div>
+        <div class="oneTpl">
+            <p class="oneTplItem">
+                <span>警告</span>
+                <select id="isWarn">
+                    <option value="00">启动警告</option>
+                    <option value="01">无声</option>
+                </select>
+
+            </p>
+            <p class="oneTplItem">
+                <span>警笛音量</span>
+                <select id="warnVolume">
+                    <option value="0">不响</option>
+                    <option value="1">低</option>
+                    <option value="2">高</option>
+                    <option value="3">非常高</option>
+                </select>
+
+            </p>
+            <p class="oneTplItem">
+                <span>频闪</span>
+                <select name="" id="stroboflash">
+                    <option value="0">无闪频</option>
+                    <option value="1">有闪频</option>
+                </select>
+
+            </p>
+            <p class="oneTplItem">
+                <span>报警模式</span>
+                <select name="" id="warnModel">
+                    <option value="0">无报警</option>
+                    <option value="1">防盗</option>
+                    <option value="2">火灾</option>
+                    <option value="3">紧急情况</option>
+                </select>
+            </p>
+            <p class="oneTplItem">
+                <span>报警时长</span>
+                <input type="text" placeholder="秒" style="text-align: center" id="warnTime">
+
+            </p>
+            <p class="oneTplItem">
+                <span>频闪等级</span>
+                <select name="" id="warnGrade">
+                    <option value="01">低</option>
+                    <option value="02">高</option>
+                    <option value="03">非常高</option>
+                </select>
+
+            </p>
+            <div class="btns">
+                <button class="study sendControlBtn" title="下发命令报警">确定</button>
+                <button class="reset">重置</button>
+            </div>
+        </div>
+    </div>
+
+</div>
+</body>
+<!--JQuery-->
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        //页面开关的样式显示切换
+        $('.checkBox').find('span').each(function (n) {
+            $(this).click(function () {
+                $(this).addClass('active').siblings().removeClass('active');
+            })
+        });
+        $('.on').click(function () {
+            $(".imgIcon").attr('src',"http://113.204.9.70:3333/images/2019/10/14/4be9dafa54012dff7f541aa9fa3fa83d.png")
+        });
+        $('.off').click(function () {
+            $(".imgIcon").attr('src',"http://113.204.9.70:3333/images/2019/10/14/ae1f2fd079831bf8dad72d39a55379c6.png")
+        });
+        //关闭模板
+        $(".outTpl").on('click',function () {
+            $(".hwxxTemplate").css({
+                display:'none'
+            });
+        });
+
+        $(".hwxx001").on('click',function () {
+            $(".hwxxTemplate").css({
+                display:'block'
+            });
+        });
+        //重置
+        $(".reset").on("click",function () {
+            $(".oneTpl input").val("");
+            var SelectArr = $("select");
+            for (var i = 0; i < SelectArr.length; i++) {
+                SelectArr[i].options[0].selected = true;
+            }
+        });
+    });
+</script>
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+<!-- import JavaScript -->
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<script>
+
+
+    // 后台函数
+    function getCmdParams(thisDom){
+        let params;
+        let title = $(thisDom).attr("title");
+        if(title === "下发命令报警"){
+            let p1 = $("#isWarn option:selected").val();
+            let p2 = $("#warnVolume option:selected").val();
+            let p3 = $("#stroboflash option:selected").val();
+            let p4 = $("#warnModel option:selected").val();
+            let p5 = $("#warnTime").val();
+            let p6 = $("#warnGrade option:selected").val();
+            params = {
+                operation : "Alarm command",
+                title:title,
+                controlParams: {
+                    p1 : p1,
+                    p2 : p2,
+                    p3 : p3,
+                    p4 : p4,
+                    p5 : p5,
+                    p6 : p6,
                 }
             };
-            option = {
-                backgroundColor: "#20263f",
-                series: [{
-                    name: '第一个圆环',
-                    type: 'pie',
-                    clockWise: false,
-                    radius: [45, 60],
-                    itemStyle: dataStyle,
-                    hoverAnimation: false,
-                    center: ['15%', '50%'],
-                    data: [{
-                        value: 25,
-                        label: {
-                            normal: {
-                                rich: {
-                                    a: {
-                                        color: '#3a7ad5',
-                                        align: 'center',
-                                        fontSize: 20,
-                                        fontWeight: "bold"
-                                    },
-                                    b: {
-                                        color: '#fff',
-                                        align: 'center',
-                                        fontSize: 16
-                                    }
-                                },
-                                formatter: function(params){
-                                    return "北京数据\n\n"+"中心";
-                                },
-                                position: 'center',
-                                show: true,
-                                textStyle: {
-                                    fontSize: '14',
-                                    fontWeight: 'normal',
-                                    color: '#fff'
-                                }
-                            }
-                        },
-                        itemStyle: {
-                            normal: {
-                                color: '#6EFFB5',
-                                shadowColor: '#6EFFB5',
-                                shadowBlur: 0
-                            }
-                        }
-                    }, {
-                        value: 75,
-                        name: 'invisible',
-                        itemStyle: {
-                            normal: {
-                                color: '#333347'
-                            },
-                            emphasis: {
-                                color: '#333347'
-                            }
-                        }
-                    }]
-                }, {
-                    name: '第二个圆环',
-                    type: 'pie',
-                    clockWise: false,
-                    radius: [45, 60],
-                    itemStyle: dataStyle,
-                    hoverAnimation: false,
-                    center: ['50%', '50%'],
-                    data: [{
-                        value: 50,
-                        label: {
-                            normal: {
-                                rich: {
-                                    a: {
-                                        color: '#d03e93',
-                                        align: 'center',
-                                        fontSize: 20,
-                                        fontWeight: "bold"
-                                    },
-                                    b: {
-                                        color: '#fff',
-                                        align: 'center',
-                                        fontSize: 16
-                                    }
-                                },
-                                formatter: function(params){
-                                    return "重庆数据\n\n"+"中心";
-                                },
-                                position: 'center',
-                                show: true,
-                                textStyle: {
-                                    fontSize: '14',
-                                    fontWeight: 'normal',
-                                    color: '#fff'
-                                }
-                            }
-                        },
-                        itemStyle: {
-                            normal: {
-                                color: '#00FFFF',
-                                shadowColor: '#00FFFF',
-                                shadowBlur: 0
-                            }
-                        }
-                    }, {
-                        value: 50,
-                        name: 'invisible',
-                        itemStyle: {
-                            normal: {
-                                color: '#333347'
-                            },
-                            emphasis: {
-                                color: '#333347'
-                            }
-                        }
-                    }]
-                }, {
-                    name: '第三个圆环',
-                    type: 'pie',
-                    clockWise: false,
-                    radius: [45, 60],
-                    itemStyle: dataStyle,
-                    hoverAnimation: false,
-                    center: ['85%', '50%'],
-                    data: [{
-                        value: 75,
-                        label: {
-                            normal: {
-                                rich: {
-                                    a: {
-                                        color: '#603dd0',
-                                        align: 'center',
-                                        fontSize: 20,
-                                        fontWeight: "bold"
-                                    },
-                                    b: {
-                                        color: '#fff',
-                                        align: 'center',
-                                        fontSize: 16
-                                    }
-                                },
-                                formatter: function(params){
-                                    return "深圳数据\n\n"+"中心";
-                                },
-                                position: 'center',
-                                show: true,
-                                textStyle: {
-                                    fontSize: '14',
-                                    fontWeight: 'normal',
-                                    color: '#fff'
-                                }
-                            }
-                        },
-                        itemStyle: {
-                            normal: {
-                                color: '#613fd1',
-                                shadowColor: '#613fd1',
-                                shadowBlur: 0
-                            }
-                        }
-                    }, {
-                        value: 25,
-                        name: 'invisible',
-                        itemStyle: {
-                            normal: {
-                                color: '#333347'
-                            },
-                            emphasis: {
-                                color: '#333347'
-                            }
-                        }
-                    }]
-                }]
-            }
-
-            // 使用刚指定的配置项和数据显示图表。
-            myChart.setOption(option);
         }
-    });
-
+        $(".hwxxTemplate").css({
+            display:'none'
+        });
+        return params
+    }
 </script>
 </html>
