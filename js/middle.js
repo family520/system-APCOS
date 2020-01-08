@@ -5,18 +5,45 @@ $.getJSON('json/flights.json', function (data) {
     // 造数据函数
     // 参数 （地球上点的数组、点球上飞线数组、点的个数)
     // 返回  [地球上的点,飞线]
-    function getScatterOption(ScatterOption, line, length) {
+    function getScatterOption(ScatterOption, line, length, type) {
 
         for (let i = 0; i < length; i++) {
             let noramlAirports = data.airports[parseInt(Math.random() * 8000)];
+
+            let run;               //运行状态
+            let linearGradient;    //渐变颜色
+            let imgUrl;            //标签图片
+
+            if(type === "normal"){
+                run = parseInt(Math.random() * 100);
+                linearGradient = ['#363FFF',"#010102"];
+                imgUrl = "earthTool_normal.png";
+            }
+            else if(type === "free"){
+                run = parseInt(Math.random() * 30);
+                linearGradient = ['#009999',"#010102"];
+                imgUrl = "earthTool_free.png";
+            }
+            else if(type === "congest"){
+                run = parseInt(Math.random() * (100-90) + 90);
+                linearGradient = ['#FF9900',"#010102"];
+                imgUrl = "earthTool_congest.png";
+            }
+            else if(type === "hitch"){
+                run = parseInt(Math.random() * 10);
+                linearGradient = ['#CC0033',"#010102"];
+                imgUrl = "earthTool_hitch.png";
+            }
             //点
             ScatterOption.push({
-
                 // name: noramlAirports[0] + '数据中心',
                 name: noramlAirports[0],
                 value: [noramlAirports[3], noramlAirports[4]],
-                run : "75%"
+                run : run + "%",
+                linearGradient : linearGradient,
+                imgUrl : imgUrl,
             });
+
             //数据中心下拉框数据
             dataCenterSelectItems.push({
                 name: noramlAirports[0] + '数据中心',
@@ -104,16 +131,16 @@ $.getJSON('json/flights.json', function (data) {
     let congestLine3D = [];
     let hitchLine3D = [];
 
-    let normal = getScatterOption(normalScatterOption, normalLine3D, 80);
+    let normal = getScatterOption(normalScatterOption, normalLine3D, 80,'normal');
     normalScatterOption = normal[0]; //点
     normalLine3D = normal[1];        //线
-    let free = getScatterOption(freeScatterOption, freeLine3D, 10);
+    let free = getScatterOption(freeScatterOption, freeLine3D, 10,'free');
     freeScatterOption = free[0];    //点
     freeLine3D = free[1];           //线
-    let congest = getScatterOption(congestScatterOption, congestLine3D, 5);
+    let congest = getScatterOption(congestScatterOption, congestLine3D, 5,'congest');
     congestScatterOption = congest[0];//点
     congestLine3D = congest[1];       //线
-    let hitch = getScatterOption(hitchScatterOption, hitchLine3D, 5);
+    let hitch = getScatterOption(hitchScatterOption, hitchLine3D, 5,'hitch');
     hitchScatterOption = hitch[0];    //点
     hitchLine3D = hitch[1];           //线
 
@@ -331,23 +358,23 @@ $.getJSON('json/flights.json', function (data) {
     ];
     myChart_twoOption = {
         backgroundColor:'#000019',
-        tooltip: {
+            tooltip: {
             enterable:true,
             confine : true,
             position : "top",
             formatter: function (params) {
-                // console.log(params)
-                let res = '<span class="tooltip" ' +
-                    'style="background:'+params.color+'" id="toolTitle"></span><br/>';
-                res +=  params.name+ '数据中心<br/>';
+
+                let res = '<div id="formatterToolTip">';
+                res += '<img id="toolImg" src="../system-APCOS/img/'+params.data.imgUrl+'" alt=""><br/>';
+                res += '<span id="toolTitle" style="background-image: linear-gradient(to right, '+params.data.linearGradient[0]+' , '+params.data.linearGradient[1]+');">'+params.name+'数据中心</span><br/>'
                 res += '<span class="tooltip" id="toolResource">资源占用率：'+ params.data.run+ '</span><br/>';
                 res += '<span class="tooltip" id="toolRunStatus">运行状态：' + params.seriesName+ '</span><br/>';
-                res += '<span class="tooltip" id="toolDetailed">详情>></span><br/>';
-                // console.log(" name"+params[0].name);
+                res += '<span class="tooltip" id="toolDetailed">详情>></span><br/></div>';
+
                 return res;
             },
             backgroundColor : 'rgba(2,15,48,0.7)',
-            padding : [5,20,5]
+            padding : [5,25,5,25]
 
         },
         legend: {
@@ -403,8 +430,7 @@ $.getJSON('json/flights.json', function (data) {
 
     // 改变右侧数据
     myChart_two.on('click', function (params){
-        console.log('params:', params.value)
-        // console.log(option.globe.viewControl.targetCoord);
-        // $("#dataCenterName").
+        // console.log('params:', params.name)
+        $(".checked").text(params.name + "数据中心");
     })
 });
