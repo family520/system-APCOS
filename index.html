@@ -680,11 +680,12 @@
         }
 
         //下拉选择
-        $(".selectBox").on('click',function () {
+        $(".selectBox > span").on('click',function () {
             $(".selectUL").show();
             $(".selectUL > li").on("click",function () {
                 $(".selectBox > span").text($(this).text());
-                $(this).parents().find(".selectUL").hide();
+                // $(this).parents().find(".selectUL").hide();
+                $(".selectUL").hide();
             });
 
         });
