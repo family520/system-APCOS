@@ -267,14 +267,13 @@ body,html{
     right: 0;
     height: 100%;
     width: 4rem;
-    min-width: 360px;
+    min-width: 320px;
     padding:0.2rem;
     color: white;
 }
-.contentBox .rightBox .itemBox{
-    /*min-height: 700px;*/
-    border: 1px solid red;
-}
+/*.contentBox .rightBox .itemBox{*/
+/*    border: 1px solid red;*/
+/*}*/
 .contentBox .rightBox .contBox{
     width: 100%;
     margin-bottom: 0.2rem;
@@ -285,7 +284,8 @@ body,html{
     font-size: 0.18rem;
     font-weight: bold;
     font-stretch: normal;
-    line-height: 0.5rem;
+    line-height: 50px;
+    min-height: 0.5rem;
     letter-spacing: 1px;
     color: #ffffff;
 }
@@ -308,6 +308,7 @@ body,html{
     font-family: MicrosoftYaHeiLight;
     font-size: 0.12rem;
     line-height: 0.2rem;
+    min-height: 0.2rem;
     color: #ffffff;
 }
 .czBox .czItem span{
@@ -325,7 +326,7 @@ body,html{
     width: 50%;
     display: flex;
     align-items: center;
-    line-height: 0.5rem;
+    line-height: 40px;
 }
 .sbBox .sbItem i{
     width: 0.07rem;
@@ -348,7 +349,7 @@ body,html{
 
 .infoBox{
     /*width: 100%;*/
-    height: 1.49rem;
+    height: 150px;
     margin-top: 0.2rem;
     margin-left: 2%;
     display: flex;
@@ -362,8 +363,8 @@ body,html{
 }
 
 .infoBox .imgBox img{
-    width: 0.74rem;
-    height: 1.01rem;
+    width: 74px;
+    height: 100px;
 }
 
 .userBox{
@@ -372,15 +373,16 @@ body,html{
     height: 100%;
 }
 .userBox img{
-    width: 0.11rem;
-    height: 0.11rem;
+    width: 11px;
+    height: 11px;
     margin-right: 0.05rem;
 }
 .userBox p{
     display: flex;
     justify-content: left;
     align-items: center;
-    line-height: 0.2rem;
+    line-height: 20px;
+    min-height: 20px;
 }
 .userBox p .userTest{
     font-family: MicrosoftYaHei;
@@ -402,6 +404,7 @@ body,html{
     display: inline-block;
     width: 1.1rem;
     height: 0.14rem;
+    min-height: 0.14rem;
     border-radius: 0.07rem;
     margin: 0 0.05rem;
     overflow: hidden;
@@ -457,7 +460,7 @@ body,html{
 */
 .selectBox{
     width: 100%;
-    height: 0.3rem;
+    height: 30px;
     position: relative;
     border-radius: 0.15rem;
     background-color: #001A30;
@@ -466,9 +469,9 @@ body,html{
     display: inline-block;
     width: 100%;
     height: 100%;
-    line-height: 0.3rem;
+    line-height: 30px;
     /*text-align: center;*/
-    padding-left: 0.16rem;
+    padding-left: 0.2rem;
     font-family: MicrosoftYaHei;
     font-size: 0.16rem;
     letter-spacing: 0.008rem;
@@ -487,7 +490,7 @@ body,html{
 .selectBox ul{
     list-style: none;
     width: 92%;
-    height: 1.5rem;
+    height: 150px;
     position: absolute;
     top: 0.28rem;
     z-index: 11;
@@ -502,8 +505,8 @@ body,html{
 }
 .selectBox ul li{
     width: 100%;
-    height: 0.3rem;
-    line-height: 0.3rem;
+    height: 30px;
+    line-height: 30px;
     padding-left: 0.05rem;
     font-family: MicrosoftYaHei;
     font-size: 0.16rem;
