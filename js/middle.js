@@ -440,4 +440,8 @@ $.getJSON('json/flights.json', function (data) {
         // console.log('params:', params.name)
         $(".checked").text(params.name + "数据中心");
     })
+
+    window.addEventListener("resize", function() {
+        myChart_two.resize();
+    });
 });
