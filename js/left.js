@@ -364,7 +364,7 @@ $(function () {
     }
 
     //下拉选择
-    $(".selectBox").on('click',function () {
+    $(".selectBox >span").on('click',function () {
         $(".selectUL").show();
         $(".selectUL > li").on("click",function () {
             $(".selectBox > span").text($(this).text());
