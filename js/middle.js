@@ -96,17 +96,23 @@ $.getJSON('json/flights.json', function (data) {
 
             name: 'BeiJing',
             value: [116.46, 39.92],
-            run : "75%"
+            run : parseInt(Math.random() * 100),
+            linearGradient : ['#363FFF',"#010102"],
+            imgUrl : "earthTool_normal.png",
         },
         {
             name: 'Chongqing',
             value: [106.55, 29.57],
-            run : "75%"
+            run : parseInt(Math.random() * 100),
+            linearGradient : ['#363FFF',"#010102"],
+            imgUrl : "earthTool_normal.png",
         },
         {
             name: 'Shenzhen',
             value: [114.05, 22.55],
-            run : "75%"
+            run : parseInt(Math.random() * 100),
+            linearGradient : ['#363FFF',"#010102"],
+            imgUrl : "earthTool_normal.png",
         }
     ];   //正常运行
     let freeScatterOption = [];        //空闲
@@ -374,7 +380,7 @@ $.getJSON('json/flights.json', function (data) {
                 return res;
             },
             backgroundColor : 'rgba(2,15,48,0.7)',
-            padding : [5,25,5,25]
+            padding : [5,25,5,10]
 
         },
         legend: {
@@ -410,7 +416,8 @@ $.getJSON('json/flights.json', function (data) {
                 },
             },
             viewControl: {
-                autoRotate: false
+                autoRotate: false,
+                targetCoord: [116.46, 39.92]
             },
             silent: true
         },
