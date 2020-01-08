@@ -108,7 +108,7 @@
                 <div style="width: 100%;height: 100%">2D页面</div>
             </div>
             <div class="contItem" v-show="!isContShow">
-                <div id="two" style="width: 10rem;height: 9.6rem;"></div>
+                <div id="two" style="width: 100%;height: 100%;"></div>
             </div>
         </div>
         <div class="rightBox">
@@ -680,11 +680,11 @@
         }
 
         //下拉选择
-        $(".selectBox > span").on('click',function () {
+        $(".selectBox").on('click',function () {
             $(".selectUL").show();
             $(".selectUL > li").on("click",function () {
                 $(".selectBox > span").text($(this).text());
-                $(".selectUL").hide();
+                $(this).parents().find(".selectUL").hide();
             });
 
         });
@@ -723,7 +723,7 @@
                 });
                 // 飞线
 
-                if (i == 0) {
+                if (i === 0) {
                     line.push(
                         [
                             [114.05, 22.55],
@@ -785,7 +785,7 @@
                 [106.55, 29.57],//重庆到深圳
                 [114.05, 22.55]
             ]
-        ]
+        ];
         let freeLine3D = [];
         let congestLine3D = [];
         let hitchLine3D = [];
@@ -932,7 +932,7 @@
                 effect: {
                     show: true,
                     trailWidth: 2,
-                    trailLength: 0.15,
+                    trailLength: 0.2,
                     trailOpacity: 1,
                     trailColor: 'rgb(30, 30, 60)'
                 },
@@ -954,7 +954,7 @@
                 effect: {
                     show: true,
                     trailWidth: 2,
-                    trailLength: 0.15,
+                    trailLength: 0.2,
                     trailOpacity: 1,
                     trailColor: 'rgb(30, 30, 60)'
                 },
@@ -976,7 +976,7 @@
                 effect: {
                     show: true,
                     trailWidth: 2,
-                    trailLength: 0.15,
+                    trailLength: 0.2,
                     trailOpacity: 1,
                     trailColor: 'rgb(30, 30, 60)'
                 },
@@ -998,7 +998,7 @@
                 effect: {
                     show: true,
                     trailWidth: 2,
-                    trailLength: 0.15,
+                    trailLength: 0.2,
                     trailOpacity: 1,
                     trailColor: 'rgb(30, 30, 60)'
                 },
@@ -1018,13 +1018,14 @@
         // console.log(series);
 
         let option = {
+            backgroundColor:'#000019',
             tooltip: {
                 enterable:true,
                 confine : true,
                 position : "top",
                 formatter: function (params) {
                     // console.log(params)
-                    var res = '<span class="tooltip" ' +
+                    let res = '<span class="tooltip" ' +
                         'style="background:'+params.color+'" id="toolTitle"></span><br/>';
                     res +=  params.name+ '数据中心<br/>';
                     res += '<span class="tooltip" id="toolResource">资源占用率：'+ params.data.run+ '</span><br/>';
@@ -1048,61 +1049,40 @@
                 }
             },
             globe: {
-
-                environment: 'img/starfield.jpg',
-
+                baseTexture :'img/world.topo.bathy.200401.jpg',
                 heightTexture: 'img/bathymetry_bw_composite_4k.jpg',
-
                 displacementScale: 0.1,
                 displacementQuality: 'high',
 
-                baseColor: '#000',
+                baseColor: '#ffffff',
 
                 shading: 'realistic',
                 realisticMaterial: {
-                    roughness: 0.2,
-                    metalness: 0
-                },
-
-                postEffect: {
-                    enable: true,
-                    depthOfField: {
-                        enable: false,
-                        focalDistance: 150
-                    }
-                },
-                temporalSuperSampling: {
-                    enable: true
+                    roughness: 0,
+                    metalness: 0.2
                 },
                 light: {
                     ambient: {
-                        intensity: 0
+                        intensity: 1
                     },
                     main: {
-                        intensity: 0.1,
+                        intensity: 1,
                         shadow: false
                     },
-                    ambientCubemap: {
-                        texture: 'img/lake.hdr',
-                        exposure: 1,
-                        diffuseIntensity: 0.5,
-                        specularIntensity: 2
-                    }
                 },
                 viewControl: {
-                    autoRotate: false,
-                    autoRotateSpeed: 5,
-                    distance: 230,
-                    targetCoord: [116.46, 39.92],
-                    zoomSensitivity : 3,
+                    autoRotate: false
                 },
                 silent: true
             },
             series: series
-        }
+        };
 
         myChart.setOption(option);
-
+        window.onresize = function()
+        {
+            myChart.resize();
+        }
         // window.addEventListener('keydown', function () {
         //     series.forEach(function (series, idx) {
         //         myChart.dispatchAction({
